@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cálculos com IPV4</title>
+
+    <!-- jQuery -->
+    <!--<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- CSS - Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/estilo.css" type="text/css" />
+
+    <!-- JS - Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- JS -->
+    <script type="text/javascript" src="../assets/js/script.js"></script>
+
+    <script type="text/javascript">
+    </script>
+
+
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1">
+            <h1 class="page-header text-center">Cálculos com IPV4 <br><small>(Máscara de Rede, Endereço de Rede, Endereço de Broadcast)</small></h1>
+        </div>
+    </div>
+
+    <div id="margem">
+        <div class="row">
+            <div class="container">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><i class="fa fa-code fa-lg"></i>&nbsp Entrada de dados</div>
+                    <div class="panel-body">
+                        <p class="text-justify"></p>
+
+                        <table class="table table-condensed" id="ipv4">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Endereço IP</th>
+                                    <th class="text-center">Prefixo</th>
+                                    <th class="text-center">IP + Prefixo</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr>
+                                    <td class="col-lg-5">
+                                        <div class="input-group">
+                                            <div class="form-group" id="divIp1">
+                                                <input class="form-control text-center next" id="ip1" type="text" placeholder="" onkeypress="return SomenteNumero(event);" onkeyup="validaIp1()" maxlength="3" required/>
+                                                <span id="spanIp1" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                            </div>
+                                            <span class="input-group-addon" id="sizing-addon1">.</span>
+                                            <div class="form-group" id="divIp2">
+                                                <input class="form-control text-center next" id="ip2" type="text" placeholder="" onkeypress="return SomenteNumero(event);" onkeyup="validaIp2()" maxlength="3" required/>
+                                                <span id="spanIp2" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                            </div>
+                                            <span class="input-group-addon" id="sizing-addon1">.</span>
+                                            <div class="form-group" id="divIp3">
+                                                <input class="form-control text-center next" id="ip3" type="text" placeholder="" onkeypress="return SomenteNumero(event);" onkeyup="validaIp3()" maxlength="3" required/>
+                                                <span id="spanIp3" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                            </div>
+                                            <span class="input-group-addon" id="sizing-addon1">.</span>
+                                            <div class="form-group" id="divIp4">
+                                                <input class="form-control text-center next" id="ip4" type="text" placeholder="" onkeypress="return SomenteNumero(event);" onkeyup="validaIp4()" maxlength="3" required/>
+                                                <span id="spanIp4" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-lg-1">
+                                        <div class="form-group" id="divSufixo">
+                                            <input class="form-control text-center next" id="sufixo" type="text" placeholder="" onkeypress="return SomenteNumero(event);" onkeyup="validaSufixo()" maxlength="2" required/>
+                                            <span id="spanSufixo" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        </div>
+                                    </td>
+                                    <td class="col-lg-2">
+                                        <input class="form-control text-center" id="ipSufixo" type="text" placeholder="" readonly/>
+
+                                    </td>
+                                    <td class="col-lg-4">
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <a class="btn btn-default" onclick="geraAleatorio()">Randômico</a>
+                                            <a class="btn btn-default" onclick="limparCampos()">Limpar</a>
+                                            <a class="btn btn-default" onclick="hideAll()" id="hide-all">Ocultar Tudo</a>
+                                            <a class="btn btn-success" onclick="calcula()">Calcular</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Endereço IP (Binário)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr>
+                                    <td>
+                                        <input class="form-control text-center input" id="endIpBinario" type="text" readonly/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Máscara de Rede (Binário)</th>
+                                    <th class="text-center">Máscara de Rede (Decimal)</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr>
+                                    <td class="col-lg-5">
+                                        <input class="form-control text-center input input-mac" id="endMacBinario" type="text" readonly/>
+                                    </td>
+                                    <td class="col-lg-5">
+                                        <input class="form-control text-center input input-mac" id="endMacDecimal" type="text" readonly/>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <a class="btn btn-default" id="hide-mac" onclick="hideMac()">Ocultar</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Endereço de Rede (Binário)</th>
+                                    <th class="text-center">Endereço de Rede (Decimal)</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr>
+                                    <td class="col-lg-5">
+                                        <input class="form-control text-center input input-rede" id="endRedeBinario" type="text" readonly/>
+                                    </td>
+                                    <td class="col-lg-5">
+                                        <input class="form-control text-center input input-rede" id="endRedeDecimal" type="text" readonly/>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <a class="btn btn-default" id="hide-rede" onclick="hideRede()">Ocultar</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Endereço de Broadcast (Binário)</th>
+                                    <th class="text-center">Endereço de Broadcast (Decimal)</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr>
+                                    <td class="col-lg-5">
+                                        <input class="form-control text-center input input-broad" id="endBroadBinario" type="text" readonly/>
+                                    </td>
+                                    <td class="col-lg-5">
+                                        <input class="form-control text-center input input-broad" id="endBroadDecimal" type="text" readonly/>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <a class="btn btn-default" id="hide-broad" onclick="hideBroad()">Ocultar</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Endereço Host Inicial</th>
+                                    <th class="text-center">Endereço Host Final</th>
+                                    <th class="text-center">Qtd de Hosts</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr>
+                                    <td class="col-lg-4">
+                                        <input class="form-control text-center input input-host" id="hostInicial" type="text" readonly/>
+                                    </td>
+                                    <td class="col-lg-4">
+                                        <input class="form-control text-center input input-hostl" id="hostFinal" type="text" readonly/>
+                                    </td>
+                                    <td class="col-lg-2">
+                                        <input class="form-control text-center input input-host" id="hostQtd" type="text" readonly/>
+                                    </td>
+                                    <td class="col-lg-2">
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <a class="btn btn-default" id="hide-host" onclick="hideHost()">Ocultar</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="text-center">
+            <small>
+                <div class="col-lg-12">Mateus Zanini<h3><small>Desenvolvedor</small></h3></div>
+            </small>
+            </h2>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
