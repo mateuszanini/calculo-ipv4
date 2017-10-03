@@ -1,6 +1,6 @@
 # calculo-ipv4
 
-[Demonstração](https://redes-mateuszanini.c9.io/calculo-ipv4/home/)
+[Demonstração](https://mateuszanini.github.io/calculo-ipv4/)
 
 Cálculos com IPv4.
 * Máscara de rede
