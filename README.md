@@ -5,6 +5,6 @@
 Cálculos com IPv4.
 * Máscara de rede
 * Endereço de rede
-* Endereço de bradcast
+* Endereço de broadcast
 * ...
 > Aplicação didática para a disciplina de Redes de Computadores I.
